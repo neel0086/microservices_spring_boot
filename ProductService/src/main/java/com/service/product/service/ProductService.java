@@ -1,7 +1,7 @@
 package com.service.product.service;
 
-import com.service.product.entity.ProductRequest;
-import com.service.product.entity.ProductResponse;
+import com.service.product.dto.ProductRequest;
+import com.service.product.dto.ProductResponse;
 import com.service.product.model.Product;
 import com.service.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
