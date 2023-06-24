@@ -1,0 +1,11 @@
+server:
+  port: 8081
+
+
+spring:
+  application:
+    name: PRODUCT-SERVICE
+  data:
+    mongodb:
+      uri: mongodb+srv://neel0086:neel@products.zjwgomt.mongodb.net/?retryWrites=true&w=majority
+      database: microservices2
