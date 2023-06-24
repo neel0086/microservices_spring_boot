@@ -1,10 +1,10 @@
 server:
-  port: 8082
+  port: 8083
 
 
 spring:
   application:
-    name: ORDER-SERVICE
+    name: INVENTORY-SERVICE
   datasource:
     url: jdbc:mysql://localhost:3306/microservices2_order
     username: root
