@@ -5,6 +5,7 @@ import com.service.inventory.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -19,10 +20,10 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
     @PostMapping
-//    @ResponseStatus(HttpStatus.OK)
-    public Boolean isInStock() {
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<InventoryResponse>> isInStock(List<String> skuCodes) {
 //        log.info("Received inventory check request for skuCode: {}", skuCodes);
         System.out.println("Request succesfull, Feign client working");
-        return null;
+        return ResponseEntity.ok(inventoryService.isInStock(skuCodes));
     }
 }

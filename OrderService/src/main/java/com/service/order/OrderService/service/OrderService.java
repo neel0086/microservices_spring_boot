@@ -2,12 +2,10 @@ package com.service.order.OrderService.service;
 
 import com.service.order.OrderService.dto.OrderItemsDto;
 import com.service.order.OrderService.dto.OrderRequest;
-import com.service.order.OrderService.external.InventoryService;
+import com.service.order.OrderService.external.dto.InventoryResponse;
+import com.service.order.OrderService.external.service.InventoryService;
 import com.service.order.OrderService.model.Order;
 import com.service.order.OrderService.model.OrderItems;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,7 +26,7 @@ public class OrderService {
                 .map(orderItemsDto -> {
                     return orderItemsDto.getSkuCode();}
                 ).toList();
-        inventoryService.isInStock();
+        List<InventoryResponse> inventoryResponses = inventoryService.isInStock(skuCodes).getBody();
         order.setOrderNumber(UUID.randomUUID().toString());
         List<OrderItems> orderItems = orderRequest.getOrderItemsDto()
                 .stream()
