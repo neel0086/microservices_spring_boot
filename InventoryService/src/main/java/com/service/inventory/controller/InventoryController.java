@@ -11,17 +11,18 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/inventory")
+@RequestMapping("/inventory")
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
 public class InventoryController {
 
     private final InventoryService inventoryService;
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<InventoryResponse> isInStock(@RequestParam List<String> skuCode) {
-        log.info("Received inventory check request for skuCode: {}", skuCode);
-        return inventoryService.isInStock(skuCode);
+    @PostMapping
+//    @ResponseStatus(HttpStatus.OK)
+    public Boolean isInStock() {
+//        log.info("Received inventory check request for skuCode: {}", skuCodes);
+        System.out.println("Request succesfull, Feign client working");
+        return null;
     }
 }
