@@ -1,12 +1,11 @@
 server:
   port: 8083
 
-
 spring:
   application:
     name: INVENTORY-SERVICE
   datasource:
-    url: jdbc:mysql://localhost:3306/microservices2_order
+    url: jdbc:mysql://localhost:3306/microservices2_inventory
     username: root
     password: neel
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,3 +16,12 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
