@@ -4,12 +4,16 @@ import com.service.order.OrderService.dto.OrderItemsDto;
 import com.service.order.OrderService.dto.OrderRequest;
 import com.service.order.OrderService.model.Order;
 import com.service.order.OrderService.model.OrderItems;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class OrderService {
     public void placeOrder(OrderRequest orderRequest){
         Order order = new Order();
