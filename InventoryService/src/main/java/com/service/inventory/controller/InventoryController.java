@@ -21,7 +21,7 @@ public class InventoryController {
     private final InventoryService inventoryService;
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<InventoryResponse>> isInStock(List<String> skuCodes) {
+    public ResponseEntity<List<InventoryResponse>> isInStock(@RequestBody List<String> skuCodes) {
 //        log.info("Received inventory check request for skuCode: {}", skuCodes);
         System.out.println("Request succesfull, Feign client working");
         return ResponseEntity.ok(inventoryService.isInStock(skuCodes));

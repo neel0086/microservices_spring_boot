@@ -6,6 +6,7 @@ import com.service.order.OrderService.external.dto.InventoryResponse;
 import com.service.order.OrderService.external.service.InventoryService;
 import com.service.order.OrderService.model.Order;
 import com.service.order.OrderService.model.OrderItems;
+import com.service.order.OrderService.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,8 +17,12 @@ import java.util.UUID;
 @Transactional
 public class OrderService {
     InventoryService inventoryService;
-    OrderService(InventoryService inventoryService){
+
+    OrderRepository orderRepository;
+
+    OrderService(OrderRepository orderRepository,InventoryService inventoryService){
         this.inventoryService=inventoryService;
+        this.orderRepository=orderRepository;
     }
     public String placeOrder(OrderRequest orderRequest){
         Order order = new Order();
@@ -27,11 +32,21 @@ public class OrderService {
                     return orderItemsDto.getSkuCode();}
                 ).toList();
         List<InventoryResponse> inventoryResponses = inventoryService.isInStock(skuCodes).getBody();
-        order.setOrderNumber(UUID.randomUUID().toString());
-        List<OrderItems> orderItems = orderRequest.getOrderItemsDto()
-                .stream()
-                .map(orderItemsDto ->mapToDto(orderItemsDto)).toList();
-        order.setOrderItemsList(orderItems);
+        System.out.println(inventoryResponses);
+        boolean flag=true;
+        for(InventoryResponse ir : inventoryResponses){
+            if(!ir.isInStock()){
+                flag=false;
+            }
+        }
+        if(flag) {
+            order.setOrderNumber(UUID.randomUUID().toString());
+            List<OrderItems> orderItems = orderRequest.getOrderItemsDto()
+                    .stream()
+                    .map(orderItemsDto -> mapToDto(orderItemsDto)).toList();
+            order.setOrderItemsList(orderItems);
+            orderRepository.save(order);
+        }
         return "Success";
     }
     private OrderItems mapToDto(OrderItemsDto orderItemsDto){
