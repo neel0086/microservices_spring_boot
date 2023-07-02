@@ -35,7 +35,6 @@ spring:
       web:
         exposure:
           include: health
-
     endpoint:
       health:
         show-details: always
@@ -53,3 +52,8 @@ spring:
           permittedNumberOfCallsInHalfOpenState: 3
           slidingWindowSize: 10
           slidingWindowType: COUNT_BASED
+    retry:
+      instances:
+        OrderBreaker:
+          max-attempts: 3
+          wait-durations: 5s
