@@ -3,6 +3,7 @@ package com.service.order.OrderService.controller;
 import com.service.order.OrderService.dto.OrderRequest;
 import com.service.order.OrderService.service.OrderService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,8 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
 //    @CircuitBreaker(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
-    @Retry(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
+//    @Retry(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
+    @RateLimiter(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
     public String placeOrder(@RequestBody OrderRequest orderRequest) {
 
         return orderService.placeOrder(orderRequest);

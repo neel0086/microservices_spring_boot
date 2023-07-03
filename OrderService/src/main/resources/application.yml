@@ -57,3 +57,9 @@ spring:
         OrderBreaker:
           max-attempts: 3
           wait-durations: 5s
+    rateLimiter:
+      instances:
+        userRateLimiter:
+          limit-refresh-period: 4s
+          limit-for-period: 2
+          timeout-duration: 0s
