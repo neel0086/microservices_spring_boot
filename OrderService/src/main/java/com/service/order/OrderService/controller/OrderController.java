@@ -23,7 +23,7 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
 //    @CircuitBreaker(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
 //    @Retry(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
-    @RateLimiter(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
+//    @RateLimiter(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
     public String placeOrder(@RequestBody OrderRequest orderRequest) {
 
         return orderService.placeOrder(orderRequest);
