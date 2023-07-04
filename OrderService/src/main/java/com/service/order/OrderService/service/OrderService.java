@@ -2,11 +2,13 @@ package com.service.order.OrderService.service;
 
 import com.service.order.OrderService.dto.OrderItemsDto;
 import com.service.order.OrderService.dto.OrderRequest;
+import com.service.order.OrderService.event.OrderPlacedEvent;
 import com.service.order.OrderService.external.dto.InventoryResponse;
 import com.service.order.OrderService.external.service.InventoryService;
 import com.service.order.OrderService.model.Order;
 import com.service.order.OrderService.model.OrderItems;
 import com.service.order.OrderService.repository.OrderRepository;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,9 +22,11 @@ public class OrderService {
 
     OrderRepository orderRepository;
 
-    OrderService(OrderRepository orderRepository,InventoryService inventoryService){
+    private final KafkaTemplate kafkaTemplate;
+    OrderService(OrderRepository orderRepository, InventoryService inventoryService, KafkaTemplate kafkaTemplate){
         this.inventoryService=inventoryService;
         this.orderRepository=orderRepository;
+        this.kafkaTemplate = kafkaTemplate;
     }
     public String placeOrder(OrderRequest orderRequest){
         Order order = new Order();
@@ -46,6 +50,7 @@ public class OrderService {
                     .map(orderItemsDto -> mapToDto(orderItemsDto)).toList();
             order.setOrderItemsList(orderItems);
             orderRepository.save(order);
+            kafkaTemplate.send("notificationTopic",new OrderPlacedEvent(order.getOrderNumber()));
         }
         return "Success";
     }
