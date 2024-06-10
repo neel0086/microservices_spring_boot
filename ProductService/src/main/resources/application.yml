@@ -9,3 +9,11 @@ spring:
     mongodb:
       uri: mongodb+srv://neel0086:neel@products.zjwgomt.mongodb.net/?retryWrites=true&w=majority
       database: microservices2
+  eureka:
+    instance:
+      prefer-ip-address: true
+    client:
+      fetch-registry: true
+      register-with-eureka: true
+      service-url:
+        defaultZone: http://localhost:8761/eureka
