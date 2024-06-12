@@ -17,6 +17,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+  zipkin:
+    base-url: http://localhost:9411/
+  sleuth:
+    sampler:
+      probability: 1.0
 
   eureka:
     instance:
@@ -31,13 +36,15 @@ spring:
     health:
       circuitbreakers:
         enabled: true
-    endpoints:
-      web:
-        exposure:
-          include: health
     endpoint:
       health:
-        show-details: always
+        show-details: "ALWAYS"
+    endpoints:
+      sensitive: false
+      web:
+        exposure:
+          include: "*"
+
 
   resilience4j:
     circuitbreaker:
