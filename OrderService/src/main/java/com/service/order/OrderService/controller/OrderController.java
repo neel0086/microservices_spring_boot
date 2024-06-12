@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 @RequiredArgsConstructor
 public class OrderController {
 
@@ -21,7 +21,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-//    @CircuitBreaker(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
+    @CircuitBreaker(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
 //    @Retry(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
 //    @RateLimiter(name="OrderBreaker",fallbackMethod = "placeOrderFallback")
     public String placeOrder(@RequestBody OrderRequest orderRequest) {
